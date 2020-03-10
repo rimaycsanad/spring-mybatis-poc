@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN' 'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace="eu.rimaycsanad.springmybatis.mapper.PortfolioValueMapper">
+	<cache
+			eviction="LRU"
+			flushInterval="60000"
+			size="512"
+			readOnly="true"/>
+
+	<select id="getPortfolioValues" resultType="eu.rimaycsanad.springmybatis.domain.PortfolioValue">
+		select 	pv.id as id,
+		       	p.id as "portfolio.id",
+				p.code as "portfolio.code",
+				p.name as "portfolio.name",
+				i.id as "instrument.id",
+				i.name as "instrument.name",
+				i.short_code as "instrument.shortCode",
+				i.price as "instrument.price",
+				pv.amount as amount,
+		        pv.amount * i.price as value
+		from portfolio_value pv
+		inner join portfolio p on pv.portfolio_id = p.id
+		inner join instrument i on pv.instrument_id = i.id
+	</select>
+
+</mapper>

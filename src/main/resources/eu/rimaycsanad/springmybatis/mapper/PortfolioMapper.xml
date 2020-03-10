@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN' 'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace="eu.rimaycsanad.springmybatis.mapper.PortfolioMapper">
+	<cache
+			eviction="LRU"
+			flushInterval="60000"
+			size="512"
+			readOnly="true"/>
+
+	<select id="getPortfolios" resultType="eu.rimaycsanad.springmybatis.domain.Portfolio">
+		<![CDATA[
+			select id as id,
+			       name as name,
+			       code as code
+			from portfolio
+		]]>
+	</select>
+
+	<insert id="createPortfolio" parameterType="eu.rimaycsanad.springmybatis.domain.Portfolio">
+		insert into portfolio(id,
+		                      name,
+		                      code)
+		values ( #{id},
+		        #{name},
+		        #{code})
+	</insert>
+
+	<select id="getPortfolioById" resultType="eu.rimaycsanad.springmybatis.domain.Portfolio">
+		<![CDATA[
+		select id as id,
+			   name as name,
+			   code as code
+		from portfolio
+		where id = #{id}
+		]]>
+	</select>
+</mapper>
